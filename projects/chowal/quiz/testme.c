@@ -5,7 +5,7 @@
 
 char inputChar()
 {
-    // 32 to 125
+    // 32 to 124
     int num = (rand() % 94) + 32;
     char result = num;
     return result;
@@ -64,8 +64,5 @@ int main(int argc, char *argv[])
 {
     srand(time(NULL));
     testme();
-    //char x = inputChar();
-    //char *x = inputString();
-    //printf("ANS is %c\n", x);
     return 0;
 }
