@@ -1,7 +1,6 @@
 /*
  * unittest3.c
  * function isGameOver 
- 
  */
 
 #include "dominion.h"

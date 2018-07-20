@@ -1,7 +1,6 @@
 /*
  * unittest2.c
  * function updatecoins 
- 
  */
 
 #include "dominion.h"

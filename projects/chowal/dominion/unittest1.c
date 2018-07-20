@@ -1,7 +1,6 @@
 /*
  * unittest1.c
  * function playCard
- 
  */
 
 #include "dominion.h"

@@ -1,16 +1,7 @@
 /*
  * cardtest1.c
  *
- 
  */
-
-/*
- * Include the following lines in your makefile:
- *
- * cardtest4: cardtest4.c dominion.o rngs.o
- *      gcc -o cardtest1 -g  cardtest4.c dominion.o rngs.o $(CFLAGS)
- */
-
 
 #include "dominion.h"
 #include "dominion_helpers.h"

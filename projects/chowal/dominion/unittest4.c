@@ -1,7 +1,6 @@
 /*
  * unittest4.c
  * function getWinners
- 
  */
 
 #include "dominion.h"

@@ -1,7 +1,6 @@
 /*
  * cardtest3.c
  *
- 
  */
 
 #include "dominion.h"
