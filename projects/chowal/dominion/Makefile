@@ -57,7 +57,7 @@ unittest3: unittest3.c
 unittest4: unittest4.c
 	gcc -o unittest4 unittest4.c dominion.o rngs.o $(CFLAGS)	
 
-all_test: cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unittest3 unittest4
+unittestresults: cardtest1 cardtest2 cardtest3 cardtest4 unittest1 unittest2 unittest3 unittest4
 	./cardtest1 &> unittestresults.out
 	gcov dominion.c -b >> unittestresults.out
 	cat dominion.c.gcov >> unittestresults.out
