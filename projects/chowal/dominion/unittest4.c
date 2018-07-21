@@ -72,7 +72,7 @@ int main() {
 	// Description: player 2 wins
 	printf("TEST 3: player 2 is the winner\n");
 
-    memset(&newGame, 23, sizeof(struct gameState));
+    memcpy(&newGame, &G, sizeof(struct gameState));
 	initializeGame(numPlayers, k, seed, &newGame);
 
     int newPlayers[MAX_PLAYERS];
