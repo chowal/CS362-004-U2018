@@ -1,5 +1,6 @@
 /*
  * cardtest1.c
+ * great_hall
  *
  */
 
@@ -56,8 +57,9 @@ int main() {
     printf("TEST 1: Correct player is playing the %s card\n", TESTCARD);
     
 	printf("current player = %d, expected = %d\n", testG.whoseTurn, G.whoseTurn);
-    //assert(testG.whoseTurn == G.whoseTurn);
+
     assertInt(testG.whoseTurn, G.whoseTurn);
+
     printf("%s\n", spacing);
     
 	// ----------- TEST 2 --------------
@@ -68,25 +70,25 @@ int main() {
 	newCards = 1;
 	printf("hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
 	printf("deck count = %d, expected = %d\n", testG.deckCount[thisPlayer], G.deckCount[thisPlayer] - newCards + shuffledCards);
-	//assert(testG.handCount[thisPlayer] == G.handCount[thisPlayer] + newCards - discarded);
-    assertInt(testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
 
-	//assert(testG.deckCount[thisPlayer] == G.deckCount[thisPlayer] - newCards + shuffledCards);
+    assertInt(testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
     assertInt(testG.deckCount[thisPlayer], G.deckCount[thisPlayer] - newCards + shuffledCards);
+
     printf("%s\n", spacing);
 
-	// ----------- TEST 3: choice1 = 2 = +2 coins --------------
+	// ----------- TEST 3 --------------
 	// DESCRIPTION: Check that the player has 1 more action
 	//
 	printf("TEST 3: Player gets a new action\n");
 
 	newCards = 1;
 	printf("player actions = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
-	//assert(testG.numActions == G.numActions + action);
+
     assertInt(testG.numActions, G.numActions + action);
+
     printf("%s\n", spacing);
 
-    // ----------- TEST 4: No changes to victory cards--------------
+    // ----------- TEST 4 --------------
     // Description: Check whether victory cards hae been changed
 	printf("TEST 4: victory cards have not changed\n");
     printf("estate = %d, expected = %d\n", testG.supplyCount[estate], G.supplyCount[estate]); 
@@ -99,7 +101,7 @@ int main() {
 
     printf("%s\n", spacing);
 
-    // ----------- TEST 5: No changes to kingdom cards--------------
+    // ----------- TEST 5 --------------
     // Description: Check whether kingdom cards hae been changed
 	printf("TEST 5: kingdom cards have not changed\n");
     int i;

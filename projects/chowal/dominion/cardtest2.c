@@ -1,6 +1,6 @@
 /*
  * cardtest2.c
- *
+ * smithy
  */
 
 #include "dominion.h"
@@ -58,7 +58,7 @@ int main() {
 
 	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
 
-	// ----------- TEST 1: game state check --------------
+	// ----------- TEST 1 --------------
 	// DESCRIPTION: Check the current game state
 	//              To test this, we need to see if the current player gets the new cards
 	printf("TEST 1: current game state\n");
@@ -71,39 +71,50 @@ int main() {
     // along with discard pile
 	newCards = 3;
 	printf("hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
+
     assertInt(testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
 
     printf("%s\n", spacing);
 
-    // ----------- TEST 2: card count increased--------------
+    // ----------- TEST 2--------------
+    // Description: Test that the card count has increased
+    //
 	printf("TEST 2: card count increased\n");
 
     // Played card count has increased and different from original game
 	printf("played card count = %d, expected = %d\n", testG.playedCardCount + 1, G.playedCardCount);
+
     assertIntNE(testG.playedCardCount, G.playedCardCount);
 
     printf("%s\n", spacing);
 
-    // ----------- TEST 3: Deck has been decremented--------------
+    // ----------- TEST 3--------------
     // Description: check that the deck has been decremented after drawing
+    //
 	printf("TEST 3: Deck has been decremented\n");
 
 	printf("deck count = %d, expected = %d\n", testG.deckCount[thisPlayer], G.deckCount[thisPlayer] - newCards + shuffledCards);
+
     assertInt(testG.deckCount[thisPlayer], G.deckCount[thisPlayer] - newCards + shuffledCards);
+
     printf("%s\n", spacing);
 
-    // ----------- TEST 4: State changes should not occur for other players--------------
+    // ----------- TEST 4--------------
     // Description: Check that other player's state remains the same
+    //
+	printf("TEST 4: Other player's state remains the same\n");
 	printf("deck count = %d, expected = %d\n", testG.deckCount[thisPlayer+1], G.deckCount[thisPlayer+1]);
 	printf("hand count = %d, expected = %d\n", testG.handCount[thisPlayer+1], G.handCount[thisPlayer+1]);
 
     assertInt(testG.deckCount[thisPlayer+1], G.deckCount[thisPlayer+1]);
     assertInt(testG.handCount[thisPlayer+1], G.handCount[thisPlayer+1]);
+
     printf("%s\n", spacing);
 
-    // ----------- TEST 4: No changes to victory cards--------------
+    // ----------- TEST 5 --------------
     // Description: Check whether victory cards hae been changed
-	printf("TEST 4: victory cards have not changed\n");
+    //
+	printf("TEST 5: victory cards have not changed\n");
     printf("estate = %d, expected = %d\n", testG.supplyCount[estate], G.supplyCount[estate]); 
     printf("duchy = %d, expected = %d\n", testG.supplyCount[duchy], G.supplyCount[duchy]); 
     printf("province = %d, expected = %d\n", testG.supplyCount[province], G.supplyCount[province]); 
@@ -114,9 +125,10 @@ int main() {
 
     printf("%s\n", spacing);
 
-    // ----------- TEST 5: No changes to kingdom cards--------------
+    // ----------- TEST 6 --------------
     // Description: Check whether kingdom cards hae been changed
-	printf("TEST 5: kingdom cards have not changed\n");
+    //
+	printf("TEST 6: kingdom cards have not changed\n");
     int i;
     for (i = 0; i < 10 ; i++){
         printf("kingdom card(%d) = %d, expected = %d\n", k[i], testG.supplyCount[k[i]], G.supplyCount[k[i]]); 

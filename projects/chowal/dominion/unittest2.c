@@ -116,7 +116,7 @@ int main() {
     printf("%s\n", spacing);
 
     // ----------- TEST 6 --------------
-	// DESCRIPTION: Test the max amount of bonus
+	// DESCRIPTION: Test the min amount of bonus
     printf("TEST 6: Test min bonus\n");
     bonus = 1;
     memcpy(G.hand[thisPlayer], coppers, sizeof(int) * handCount);

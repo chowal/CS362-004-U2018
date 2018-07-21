@@ -2077,12 +2077,13 @@ TEST 3: Deck has been decremented
 deck count = 5, expected = 2
 TEST FAILED
 ~~~~~~~~~~~~~~~~~~~~
+TEST 4: Other player's state remains the same
 deck count = 10, expected = 10
 hand count = 0, expected = 0
 PASS
 PASS
 ~~~~~~~~~~~~~~~~~~~~
-TEST 4: victory cards have not changed
+TEST 5: victory cards have not changed
 estate = 8, expected = 8
 duchy = 8, expected = 8
 province = 8, expected = 8
@@ -2090,7 +2091,7 @@ PASS
 PASS
 PASS
 ~~~~~~~~~~~~~~~~~~~~
-TEST 5: kingdom cards have not changed
+TEST 6: kingdom cards have not changed
 kingdom card(7) = 10, expected = 10
 PASS
 kingdom card(22) = 10, expected = 10

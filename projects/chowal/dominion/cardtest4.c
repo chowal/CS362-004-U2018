@@ -1,6 +1,6 @@
 /*
  * cardtest4.c
- *
+ * council_room
  */
 
 #include "dominion.h"
@@ -50,15 +50,18 @@ int main() {
 
 	printf("----------------- Testing Card: %s ----------------\n", TESTCARD);
 
-	// ----------- TEST 1: Test how many buys were given to the user --------------
+	// ----------- TEST 1 --------------
 	// Description: Check the number of buys were given
+	//
 	printf("TEST 1: Check # of buys\n");
 	printf("buys = %d, expected = %d\n", testG.numBuys, G.numBuys + 1);
 	assertInt(testG.numBuys, G.numBuys + 1);
 
     printf("%s\n", spacing);
-	// ----------- TEST 2: Deck count--------------
+
+	// ----------- TEST 2--------------
 	// Description: Testing that 4 cards were drawn
+	//
 	printf("TEST 2: Deck count\n");
     newCards = 4;
 	printf("hand count = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
@@ -67,10 +70,12 @@ int main() {
 
     printf("%s\n", spacing);
 
-	// ----------- TEST 3: Deck decrements correctly--------------
+	// ----------- TEST 3--------------
 	// Description: Check that the players deck has been decremented
+	//
 	printf("TEST 3: Decrement deck after drawing\n");
     printf("deck count = %d, expected = %d\n", testG.deckCount[thisPlayer], G.deckCount[thisPlayer] - newCards);
+
     assertInt(testG.deckCount[thisPlayer], G.deckCount[thisPlayer] - newCards + shuffledCards);
     
     printf("%s\n", spacing);
@@ -85,8 +90,9 @@ int main() {
 
     printf("%s\n", spacing);*/
 
-    // ----------- TEST 5: No changes to victory cards--------------
+    // ----------- TEST 5--------------
     // Description: Check whether victory cards hae been changed
+    //
 	printf("TEST 5: victory cards have not changed\n");
     printf("estate = %d, expected = %d\n", testG.supplyCount[estate], G.supplyCount[estate]); 
     printf("duchy = %d, expected = %d\n", testG.supplyCount[duchy], G.supplyCount[duchy]); 
@@ -98,8 +104,9 @@ int main() {
 
     printf("%s\n", spacing);
 
-    // ----------- TEST 6: No changes to kingdom cards--------------
+    // ----------- TEST 6--------------
     // Description: Check whether kingdom cards hae been changed
+    //
 	printf("TEST 6: kingdom cards have not changed\n");
     int i;
     for (i = 0; i < 10 ; i++){
