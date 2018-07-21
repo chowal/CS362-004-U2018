@@ -81,8 +81,7 @@ int main() {
 	//
 	printf("TEST 3: Player gets a new action\n");
 
-	newCards = 1;
-	printf("player actions = %d, expected = %d\n", testG.handCount[thisPlayer], G.handCount[thisPlayer] + newCards - discarded);
+	printf("player actions = %d, expected = %d\n", testG.numActions, G.numActions + action);
 
     assertInt(testG.numActions, G.numActions + action);
 
