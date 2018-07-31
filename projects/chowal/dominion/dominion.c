@@ -644,19 +644,20 @@ int getCost(int cardNumber)
 }
 
 int smithy_f(int currentPlayer, struct gameState *state, int handPos){
-    // FIXME BUG <-- not using the same game state
-    struct gameState *bugState = malloc(sizeof(struct gameState));
+    // BUG <-- not using the same game state
+    //struct gameState *bugState = malloc(sizeof(struct gameState));
+    // FIXME -> fixed the bug because otherwise everything will fail
 
     //+3 Cards
     int i;
     for (i = 0; i < 3; i++)
 	{
-	  drawCard(currentPlayer, bugState);
-	  // drawCard(currentPlayer, state);
+	  // drawCard(currentPlayer, bugState);
+	  drawCard(currentPlayer, state);
 	}
     //discard card from hand
-    discardCard(handPos, currentPlayer, bugState, 0);
-    //discardCard(handPos, currentPlayer, state, 0);
+    // discardCard(handPos, currentPlayer, bugState, 0);
+    discardCard(handPos, currentPlayer, state, 0);
     return 0;
 }
 
@@ -699,7 +700,6 @@ int council_room_f(int currentPlayer, struct gameState *state, int handPos) {
 	{
 	  drawCard(currentPlayer, state);
 	}
-			
       //+1 Buy
       // FIXME BUG <-- commenting this out
       //state->numBuys++;
