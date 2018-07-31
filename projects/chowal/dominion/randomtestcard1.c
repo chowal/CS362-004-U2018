@@ -50,7 +50,7 @@ int main() {
     
     int currentState = 0;
     int i, thisPlayer, effect;
-    for (i = 0; i < 8; i++){
+    for (i = 0; i < 10; i++){
         switch (currentState){
             case start:
                 // initilize game
@@ -82,7 +82,7 @@ int main() {
             case buy_c:
                 printf("deck %d, base: %d\n", test_1.numBuys, baseG.numBuys + 1);
                 assertInt(test_1.numBuys, baseG.numBuys + 1);
-                currentState++;
+                currentState = start;
         } // end of for loop
     }
 

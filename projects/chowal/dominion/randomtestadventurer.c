@@ -39,51 +39,60 @@ enum STATE {
     deck_c,
     discard_c,
     hand_c,
-    buy_c};
+    treasure_c};
 
 int main() {
     srand(time(NULL));
 
     int bonus = 0; 
     struct gameState baseG;
-    struct gameState test_1;
+    struct gameState test_a;
     
     int currentState = 0;
-    int i, thisPlayer, effect;
-    for (i = 0; i < 8; i++){
+    int i, j, k, thisPlayer, effect, treasureCount, currentCard;
+    for (i = 0; i < 10; i++){
         switch (currentState){
             case start:
                 // initilize game
                 thisPlayer = 0;
-                test_1.handCount[thisPlayer] = (rand() % MAX_HAND);
-                test_1.deckCount[thisPlayer] = (rand() % MAX_DECK);
-                test_1.discardCount[thisPlayer] = (rand() % MAX_DECK);
-                test_1.numBuys = (rand() % 3);
-                test_1.playedCardCount = 3;
-                test_1.whoseTurn = thisPlayer;
-                memcpy(&baseG, &test_1, sizeof(struct gameState));
+                test_a.handCount[thisPlayer] = (rand() % MAX_HAND);
+                test_a.deckCount[thisPlayer] = (rand() % MAX_DECK);
+                test_a.discardCount[thisPlayer] = (rand() % MAX_DECK);
+                test_a.playedCardCount = 3;
+                //treasureLimit = (rand() % test_a.deckCount[thisPlayer]); 
+                for (j = 0; j < test_a.deckCount[thisPlayer]; j++){
+                    test_a.deck[thisPlayer][j] = copper;
+                    test_a.deck[thisPlayer][j] = silver;
+                    test_a.deck[thisPlayer][j] = gold;
+                }
+                test_a.whoseTurn = thisPlayer;
+                memcpy(&baseG, &test_a, sizeof(struct gameState));
 
-                //effect = cardEffect(adventurer, 0, 0, 0, &test_1, 0, &bonus); 
-                effect = adventurer_f(0, test_1, thisPlayer); 
+                effect = cardEffect(adventurer, 0, 0, 0, &test_a, 0, &bonus); 
                 if (effect != 0)
                     fail++;
                 currentState++;
             case deck_c:
-                printf("deck %d, base: %d\n", test_1.deckCount[thisPlayer], baseG.deckCount[thisPlayer]);
-                assertInt(test_1.deckCount[thisPlayer], baseG.deckCount[thisPlayer]);
+                printf("deck %d, base: %d\n", test_a.deckCount[thisPlayer], baseG.deckCount[thisPlayer] - 2);
+                assertInt(test_a.deckCount[thisPlayer], baseG.deckCount[thisPlayer] - 2);
                 currentState++;
             case discard_c:
-                printf("DISCARD deck %d, base: %d\n", test_1.playedCardCount, baseG.playedCardCount + 1);
-                assertInt(test_1.playedCardCount, baseG.playedCardCount + 1);
+                printf("DISCARD deck %d, base: %d\n", test_a.playedCardCount, baseG.playedCardCount);
+                assertInt(test_a.playedCardCount, baseG.playedCardCount);
                 currentState++;
-            case hand_c:
-                printf("deck %d, base: %d\n", test_1.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
-                assertInt(test_1.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
+            case hand_c: 
+                printf("HAND deck %d, base: %d\n", test_a.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
+                assertInt(test_a.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
                 currentState++;
-            case buy_c:
-                printf("deck %d, base: %d\n", test_1.numBuys, baseG.numBuys + 1);
-                assertInt(test_1.numBuys, baseG.numBuys + 1);
-                currentState++;
+            case treasure_c:
+                for(k = 0; k < test_a.handCount[thisPlayer]; k++){
+                    currentCard = test_a.hand[thisPlayer][k]; 
+                    if (currentCard == copper || currentCard == silver || currentCard == gold){
+                        treasureCount++;
+                    }     
+                }
+                printf("treasure %d\n", treasureCount);
+                currentState = start;  
         } // end of for loop
     }
 

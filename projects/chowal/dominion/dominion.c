@@ -644,19 +644,18 @@ int getCost(int cardNumber)
 }
 
 int smithy_f(int currentPlayer, struct gameState *state, int handPos){
-    // BUG <-- not using the same game state
-    //struct gameState *bugState = malloc(sizeof(struct gameState));
-    // FIXME -> fixed the bug because otherwise everything will fail
+    // FIXME BUG <-- not using the same game state
+    struct gameState *bugState = malloc(sizeof(struct gameState));
 
     //+3 Cards
     int i;
     for (i = 0; i < 3; i++)
 	{
-	  // drawCard(currentPlayer, bugState);
+	  //drawCard(currentPlayer, bugState);
 	  drawCard(currentPlayer, state);
 	}
     //discard card from hand
-    // discardCard(handPos, currentPlayer, bugState, 0);
+    //discardCard(handPos, currentPlayer, bugState, 0);
     discardCard(handPos, currentPlayer, state, 0);
     return 0;
 }
@@ -668,7 +667,7 @@ int adventurer_f(int drawntreasure, struct gameState *state, int currentPlayer) 
     // FIXME BUG <-- should be 2 instead of 3
     while(drawntreasure<3){
     //while(drawntreasure<2){
-	    if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
+	    if (state->deckCount[currentPlayer] < 1){//if the deck is empty we need to shuffle discard and add to deck
             // FIXME BUG <-- instead of shuffling the currentPlayer, another player shuffles their deck
             if (currentPlayer == 0)
 	            shuffle(currentPlayer + 1, state);
@@ -700,6 +699,7 @@ int council_room_f(int currentPlayer, struct gameState *state, int handPos) {
 	{
 	  drawCard(currentPlayer, state);
 	}
+			
       //+1 Buy
       // FIXME BUG <-- commenting this out
       //state->numBuys++;
@@ -770,7 +770,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-
         if (adventurer_f(drawntreasure, state, currentPlayer) == 0)
             return 0;
       /*while(drawntreasure<2){
