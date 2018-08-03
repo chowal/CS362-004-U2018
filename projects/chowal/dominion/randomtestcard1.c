@@ -20,16 +20,19 @@
 
 int pass = 0;
 int fail = 0;
+int debug = 0;
 
 char spacing[20] = "~~~~~~~~~~~~~~~~~~~~";
 
 void assertInt(int x, int y){
     if (x == y){
-        printf("PASS\n");
+        if (debug)
+            printf("PASS\n");
         pass += 1;
     }
     else{
-        printf("TEST FAILED\n");
+        if (debug)
+            printf("TEST FAILED\n");
         fail += 1;
     }   
 }
@@ -47,41 +50,65 @@ int main() {
     int bonus = 0; 
     struct gameState baseG;
     struct gameState test_1;
+   
+    int k[10] = {adventurer, embargo, village, minion, mine, cutpurse, 
+                sea_hag, tribute, smithy, council_room};
     
     int currentState = 0;
-    int i, thisPlayer, effect;
-    for (i = 0; i < 10; i++){
+    int i, thisPlayer, numPlayers, effect, end;
+    int old_d, old_h, old_b, old_p;
+    
+    numPlayers = (rand() % MAX_PLAYERS);
+    initializeGame(numPlayers, k, 10000, &baseG);
+    memcpy(&test_1, &baseG, sizeof(struct gameState));
+    for (i = 0; i < 10000; i++){
         switch (currentState){
             case start:
                 // initilize game
+                
                 thisPlayer = 0;
                 test_1.handCount[thisPlayer] = (rand() % MAX_HAND);
+                old_h = test_1.handCount[thisPlayer];
                 test_1.deckCount[thisPlayer] = (rand() % MAX_DECK);
+                old_d = test_1.deckCount[thisPlayer];
                 test_1.discardCount[thisPlayer] = (rand() % MAX_DECK);
                 test_1.numBuys = (rand() % 3);
-                test_1.playedCardCount = 3;
+                old_b = test_1.numBuys;
                 test_1.whoseTurn = thisPlayer;
-                memcpy(&baseG, &test_1, sizeof(struct gameState));
-
+                test_1.playedCards[thisPlayer] = (rand() % MAX_DECK);
+                test_1.playedCardCount = (rand() % MAX_DECK);
+                old_p = test_1.playedCardCount;
+        
+                buyCard(council_room, &test_1); 
                 effect = cardEffect(council_room, 0, 0, 0, &test_1, 0, &bonus); 
+
                 if (effect != 0)
                     fail++;
                 currentState++;
             case deck_c:
-                printf("deck %d, base: %d\n", test_1.deckCount[thisPlayer], baseG.deckCount[thisPlayer] - 4);
-                assertInt(test_1.deckCount[thisPlayer], baseG.deckCount[thisPlayer] - 4);
+                if (debug)
+                    printf("old %d, current %d\n", old_d, test_1.deckCount[thisPlayer]);
+                assertInt(test_1.deckCount[thisPlayer], old_d - 4);
                 currentState++;
             case discard_c:
-                printf("DISCARD deck %d, base: %d\n", test_1.playedCardCount, baseG.playedCardCount + 1);
-                assertInt(test_1.playedCardCount, baseG.playedCardCount + 1);
+                if (debug)
+                    //printf("DISCARD deck %d, base: %d\n", test_1.playedCardCount, baseG.playedCardCount + 1);
+                    printf("old %d, current %d\n", old_p, test_1.playedCardCount);
+                //assertInt(test_1.playedCardCount, baseG.playedCardCount + 1);
+                assertInt(test_1.playedCardCount, old_p + 1);
                 currentState++;
             case hand_c:
-                printf("deck %d, base: %d\n", test_1.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
-                assertInt(test_1.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
+                if (debug)
+                    printf("old %d, current %d\n", old_h, test_1.handCount[thisPlayer]);
+                assertInt(test_1.handCount[thisPlayer], old_h + 3);
                 currentState++;
             case buy_c:
-                printf("deck %d, base: %d\n", test_1.numBuys, baseG.numBuys + 1);
-                assertInt(test_1.numBuys, baseG.numBuys + 1);
+                if (debug)
+                    printf("old %d, current %d\n", old_b, test_1.numBuys);
+                assertInt(test_1.numBuys, old_b + 1);
+                end = endTurn(&test_1);
+                assertInt(end, 0);
+                isGameOver(&test_1);
                 currentState = start;
         } // end of for loop
     }

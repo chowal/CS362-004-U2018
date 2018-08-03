@@ -20,19 +20,35 @@
 
 int pass = 0;
 int fail = 0;
+int debug = 0;
 
 char spacing[20] = "~~~~~~~~~~~~~~~~~~~~";
 
 void assertInt(int x, int y){
     if (x == y){
-        printf("PASS\n");
+        if (debug)
+            printf("PASS\n");
         pass += 1;
     }
     else{
-        printf("TEST FAILED\n");
+        if (debug)
+            printf("TEST FAILED\n");
         fail += 1;
     }   
 }
+void assertIntNE(int x, int y){
+    if (x != y){
+        if (debug)
+            printf("PASS\n");
+        pass += 1;
+    }
+    else{
+        if (debug)
+            printf("TEST FAILED\n");
+        fail += 1;
+    }   
+}
+
 
 enum STATE {
     start = 0,
@@ -47,25 +63,33 @@ int main() {
     int bonus = 0; 
     struct gameState baseG;
     struct gameState test_a;
+    int k[10] = {adventurer, embargo, village, minion, mine, cutpurse, 
+                sea_hag, tribute, smithy, council_room};
+
     
     int currentState = 0;
-    int i, j, k, thisPlayer, effect, treasureCount, currentCard;
-    for (i = 0; i < 10; i++){
+    int i, j, t, thisPlayer, effect, treasureCount, currentCard, numPlayers;
+    int n, base_t;
+    for (i = 0; i < 1000; i++){
         switch (currentState){
             case start:
                 // initilize game
+                numPlayers = (rand() % 4);
+                initializeGame(numPlayers, k, 10000, &baseG);
                 thisPlayer = 0;
                 test_a.handCount[thisPlayer] = (rand() % MAX_HAND);
                 test_a.deckCount[thisPlayer] = (rand() % MAX_DECK);
                 test_a.discardCount[thisPlayer] = (rand() % MAX_DECK);
-                test_a.playedCardCount = 3;
+                test_a.playedCardCount = (rand() % MAX_DECK);
+                test_a.numBuys = (rand() % 3);
+                test_a.whoseTurn = thisPlayer;
+                test_a.playedCards[thisPlayer] = (rand() % MAX_DECK);
                 //treasureLimit = (rand() % test_a.deckCount[thisPlayer]); 
-                for (j = 0; j < test_a.deckCount[thisPlayer]; j++){
+                for (j = 0; j < test_a.handCount[thisPlayer]; j++){
                     test_a.deck[thisPlayer][j] = copper;
                     test_a.deck[thisPlayer][j] = silver;
                     test_a.deck[thisPlayer][j] = gold;
                 }
-                test_a.whoseTurn = thisPlayer;
                 memcpy(&baseG, &test_a, sizeof(struct gameState));
 
                 effect = cardEffect(adventurer, 0, 0, 0, &test_a, 0, &bonus); 
@@ -73,29 +97,41 @@ int main() {
                     fail++;
                 currentState++;
             case deck_c:
-                printf("deck %d, base: %d\n", test_a.deckCount[thisPlayer], baseG.deckCount[thisPlayer] - 2);
+                if (debug)
+                    printf("deck %d, base: %d\n", test_a.deckCount[thisPlayer], baseG.deckCount[thisPlayer] - 2);
                 assertInt(test_a.deckCount[thisPlayer], baseG.deckCount[thisPlayer] - 2);
                 currentState++;
             case discard_c:
-                printf("DISCARD deck %d, base: %d\n", test_a.playedCardCount, baseG.playedCardCount);
+                if (debug) 
+                    printf("DISCARD deck %d, base: %d\n", test_a.playedCardCount, baseG.playedCardCount);
                 assertInt(test_a.playedCardCount, baseG.playedCardCount);
                 currentState++;
             case hand_c: 
-                printf("HAND deck %d, base: %d\n", test_a.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
+                if (debug)
+                    printf("HAND deck %d, base: %d\n", test_a.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
                 assertInt(test_a.handCount[thisPlayer], baseG.handCount[thisPlayer] + 3);
                 currentState++;
             case treasure_c:
-                for(k = 0; k < test_a.handCount[thisPlayer]; k++){
-                    currentCard = test_a.hand[thisPlayer][k]; 
+                for(t = 0; t < test_a.handCount[thisPlayer]; t++){
+                    currentCard = test_a.hand[thisPlayer][t]; 
                     if (currentCard == copper || currentCard == silver || currentCard == gold){
                         treasureCount++;
                     }     
                 }
-                printf("treasure %d\n", treasureCount);
+                for(n = 0; n < baseG.handCount[thisPlayer]; n++){
+                    currentCard = baseG.hand[thisPlayer][n]; 
+                    if (currentCard == copper || currentCard == silver || currentCard == gold){
+                        base_t++;
+                    }     
+                }
+                if (debug)
+                    printf("treasure %d\n", treasureCount);
+                assertIntNE(treasureCount, base_t);
+                endTurn(&test_a);
                 currentState = start;  
         } // end of for loop
     }
-
+   
     printf("~~~~~~~~~~TEST COMPLETE~~~~~~~~~~~~~~~ \n");
     printf("Pass: %d, Fail: %d\n\n", pass, fail);
     return 0;

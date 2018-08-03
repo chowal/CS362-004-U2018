@@ -645,7 +645,7 @@ int getCost(int cardNumber)
 
 int smithy_f(int currentPlayer, struct gameState *state, int handPos){
     // FIXME BUG <-- not using the same game state
-    struct gameState *bugState = malloc(sizeof(struct gameState));
+    //struct gameState *bugState = malloc(sizeof(struct gameState));
 
     //+3 Cards
     int i;
