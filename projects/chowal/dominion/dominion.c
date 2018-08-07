@@ -644,7 +644,6 @@ int getCost(int cardNumber)
 }
 
 int smithy_f(int currentPlayer, struct gameState *state, int handPos){
-    // FIXME BUG <-- not using the same game state
     struct gameState *bugState = malloc(sizeof(struct gameState));
 
     //+3 Cards
@@ -664,11 +663,9 @@ int adventurer_f(int drawntreasure, struct gameState *state, int currentPlayer) 
     int cardDrawn; // to hold the top card
     int z = 0;
     int temphand[MAX_HAND];
-    // FIXME BUG <-- should be 2 instead of 3
     while(drawntreasure<3){
     //while(drawntreasure<2){
 	    if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
-            // FIXME BUG <-- instead of shuffling the currentPlayer, another player shuffles their deck
             if (currentPlayer == 0)
 	            shuffle(currentPlayer + 1, state);
             else
@@ -701,7 +698,6 @@ int council_room_f(int currentPlayer, struct gameState *state, int handPos) {
 	}
 			
       //+1 Buy
-      // FIXME BUG <-- commenting this out
       //state->numBuys++;
 			
       //Each other player draws a card
@@ -723,7 +719,6 @@ int village_f(int currentPlayer, struct gameState *state, int handPos){
       drawCard(currentPlayer, state);
 			
       //+2 Actions
-      // FIXME BUG <-- instead of actions, it increments the number of buys
       state->numActions = state->numBuys + 2;
       //state->numActions = state->numActions + 2;
 			
