@@ -1,0 +1,30 @@
+Breakpoint 1 at 0x4012d6: file cardtest2.c, line 68.
+Starting program: /nfs/stak/users/chowal/cs362/CS362-004-U2018/projects/chowal/songleDominion/cardtest2 
+
+Breakpoint 1, main () at cardtest2.c:68
+68		cardEffect(smithy, choice1, choice2, choice3, &testG, handpos, &bonus);
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-196.el7_4.2.x86_64
+cardEffect (card=13, choice1=0, choice2=0, choice3=0, state=0x7fffffff0d80, handPos=0, bonus=0x7fffffffdb00)
+    at dominion.c:653
+653	  int currentPlayer = whoseTurn(state);
+whoseTurn (state=0x7fffffff0d80) at dominion.c:347
+347	  return state->whoseTurn;
+348	}
+cardEffect (card=13, choice1=0, choice2=0, choice3=0, state=0x7fffffff0d80, handPos=0, bonus=0x7fffffffdb00)
+    at dominion.c:654
+654	  int nextPlayer = currentPlayer + 1;
+656	  int tributeRevealedCards[2] = {-1, -1};
+658	  if (nextPlayer > (state->numPlayers - 1)){
+663	  switch( card ) 
+789	      playSmithy(state, currentPlayer, handPos);
+playSmithy (state=0x7fffffff0d80, currentPlayer=0, handPos=0) at dominion.c:1303
+1303		int i = 0;
+1304		for (i = 0; i < 4; i++)
+1306			drawCard(currentPlayer, state);
+drawCard (player=0, state=0x7fffffff0d80) at dominion.c:528
+528	  if (state->deckCount[player] <= 0){//Deck is empty
+A debugging session is active.
+
+	Inferior 1 [process 7361] will be killed.
+
+Quit anyway? (y or n) 
